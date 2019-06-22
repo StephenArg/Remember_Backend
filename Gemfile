@@ -13,6 +13,11 @@ gem 'dotenv-rails'
 # Installed to set up .env file functionality. Remember to put .env into gitignore
 
 gem 'puma', '~> 3.11'
+
+# gem 'quick_random_records'
+# installed to give quickest randomization of entries; see 'https://stackoverflow.com/a/50409630/9211117'
+# didn't work. ended up using offset. see entries_controller#random
+
 # Use SCSS for stylesheets
 # gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

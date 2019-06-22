@@ -24,6 +24,7 @@ class UsersController < ApplicationController
         user = User.find do |u|
           u.username.downcase == username
         end
+        user.update(current_date: params["date"])
         render json: user
       end
     rescue

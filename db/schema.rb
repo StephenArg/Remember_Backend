@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_162227) do
+ActiveRecord::Schema.define(version: 2019_06_04_211818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(version: 2019_05_28_162227) do
     t.string "password_digest"
     t.string "name", limit: 25
     t.string "current_date"
-    t.string "random_date"
+    t.string "date_random_chosen"
+    t.integer "random_entry_id"
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
