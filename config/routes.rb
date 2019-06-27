@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  post 'entries/edit', to: 'entries#edit'
   post 'entries/create', to: 'entries#create'
   post 'entries/verify', to: 'entries#verify'
   post 'entries/random', to: 'entries#random'

@@ -10,6 +10,18 @@ class EntriesController < ApplicationController
     end
   end
 
+  def edit
+    entry = Entry.find(params["entry_id"])
+    entry.update(content: params["content"])
+
+    if entry.save
+      render json: {entry: entry}
+    else
+      puts "Error"
+    end
+
+  end
+
   def verify
     date = params["date"]
 
