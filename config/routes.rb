@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   post 'entries/edit', to: 'entries#edit'
   post 'entries/create', to: 'entries#create'
+  post 'entries/delete', to: 'entries#delete'
   post 'entries/verify', to: 'entries#verify'
+  post 'entries/skip', to: 'entries#skip'
   post 'entries/random', to: 'entries#random'
 
 

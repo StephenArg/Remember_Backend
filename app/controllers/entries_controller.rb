@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
 
   def edit
     entry = Entry.find(params["entry_id"])
-    entry.update(content: params["content"])
+    entry.content = params["content"]
 
     if entry.save
       render json: {entry: entry}
@@ -22,11 +22,22 @@ class EntriesController < ApplicationController
 
   end
 
+  def delete
+    date = params["date"]
+
+    entry = Entry.find do |e|
+      e.date_created == date
+    end
+
+    entry.destroy
+
+    render json: {entry: "none"}
+  end
+
   def verify
     date = params["date"]
 
     entry = Entry.find do |e|
-      puts e.attributes
       e.date_created == date
     end
 
@@ -37,13 +48,35 @@ class EntriesController < ApplicationController
     end
   end
 
+  def skip
+    user = User.find(params["user"]["id"])
+    previous_id = user.random_entry_id
+
+    offset = rand(user.entries.count)
+    random_entry = user.entries.offset(offset).limit(1)[0]
+
+    while random_entry.id == previous_id
+      offset = rand(user.entries.count)
+      random_entry = user.entries.offset(offset).limit(1)[0]
+    end
+
+    user.update(random_entry_id: random_entry.id, date_random_chosen: user.current_date)
+    render json: {post: random_entry}
+
+  end
+
   def random
     user = User.find(params["user"]["id"])
+    begin
+      random_entry = Entry.find(user.random_entry_id)
+    rescue
+      user.date_random_chosen = nil
+    end
 
     # if user.entries.count > 5
       if user.current_date == user.date_random_chosen
         # add in manual condition in case user deletes random-entry through calender while id is still stored
-        render json: {post: Entry.find(7)}
+        render json: {post: random_entry}
 
       else
         offset = rand(user.entries.count)
