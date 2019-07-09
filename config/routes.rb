@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'entries/verify', to: 'entries#verify'
   post 'entries/skip', to: 'entries#skip'
   post 'entries/random', to: 'entries#random'
+  post 'entries/backup', to: 'entries#backup'
 
 
   post 'users/create', to: 'users#create'

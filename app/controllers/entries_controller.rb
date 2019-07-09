@@ -62,7 +62,6 @@ class EntriesController < ApplicationController
 
     user.update(random_entry_id: random_entry.id, date_random_chosen: user.current_date)
     render json: {post: random_entry}
-
   end
 
   def random
@@ -89,6 +88,16 @@ class EntriesController < ApplicationController
     #
     # end
 
+  end
+
+  def backup
+    user = User.find(params["userId"])
+    allEntries = {}
+
+    user.entries.each do |entry|
+      allEntries["#{entry.date_created}"] = entry.content
+    end
+    render json: {backup: allEntries}
   end
 
 end

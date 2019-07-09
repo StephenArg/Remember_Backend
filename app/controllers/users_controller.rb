@@ -13,8 +13,17 @@ class UsersController < ApplicationController
   end
 
   def login
-    user = User.find_by(name: params["username"])
-    byebug
+    user = User.find_by(username: params["username"].downcase)
+
+    if user && user.authenticate(params["password"])
+      payload = {username: user.username}
+      token = JWT.encode(payload, ENV["SECRET"])
+      user.update(current_date: params["date"])
+      render json: {user: user, jwt: token}
+    else
+      puts "error"
+    end
+
   end
 
   def authenticate
