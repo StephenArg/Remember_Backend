@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   post 'entries/skip', to: 'entries#skip'
   post 'entries/random', to: 'entries#random'
   post 'entries/backup', to: 'entries#backup'
+  post 'entries/restore', to: 'entries#restore'
+  post 'entries/search', to: 'entries#search'
 
 
   post 'users/create', to: 'users#create'

@@ -72,7 +72,7 @@ class EntriesController < ApplicationController
       user.date_random_chosen = nil
     end
 
-    # if user.entries.count > 5
+    if user.entries.count > 5
       if user.current_date == user.date_random_chosen
         # add in manual condition in case user deletes random-entry through calender while id is still stored
         render json: {post: random_entry}
@@ -83,10 +83,7 @@ class EntriesController < ApplicationController
         user.update(random_entry_id: random_entry.id, date_random_chosen: user.current_date)
         render json: {post: random_entry}
       end
-
-    # # else
-    #
-    # end
+    end
 
   end
 
@@ -97,7 +94,32 @@ class EntriesController < ApplicationController
     user.entries.each do |entry|
       allEntries["#{entry.date_created}"] = entry.content
     end
-    render json: {backup: allEntries}
+    render json: allEntries
+  end
+
+  def restore
+    user = User.find(params["userId"])
+
+    user.entries.destroy_all
+    params["restoreJSON"].each do |date, content|
+      Entry.create(date_created: date, user_id: params["userId"], content: content)
+    end
+    puts "Finished"
+  end
+
+  def search
+    user = User.find(params["userId"])
+
+    date = params["date"].to_date
+
+    allEntries = user.entries.filter do |entry|
+      entry.date_created.to_date <= date
+    end
+
+    allEntries.sort! {|a,b| b.date_created.to_date <=> a.date_created.to_date}
+
+    render json: allEntries[0..14]
+
   end
 
 end
