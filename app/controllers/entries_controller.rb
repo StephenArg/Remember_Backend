@@ -23,10 +23,14 @@ class EntriesController < ApplicationController
   end
 
   def delete
-    date = params["date"]
 
-    entry = Entry.find do |e|
-      e.date_created == date
+    if params["fromTile"]
+      entry = Entry.find(params["entryId"])
+    else
+      date = params["date"]
+      entry = Entry.find do |e|
+        e.date_created == date
+      end
     end
 
     entry.destroy
