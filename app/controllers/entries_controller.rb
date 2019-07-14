@@ -1,6 +1,13 @@
 class EntriesController < ApplicationController
   def create
-    entry = Entry.new(date_created: params["date"], user_id: params["user_id"], content: params["content"])
+
+    entry = Entry.find_by(date_created: params["date"])
+
+    if entry
+      entry.content = params["content"]
+    else
+      entry = Entry.new(date_created: params["date"], user_id: params["user_id"], content: params["content"])
+    end
 
     if entry.save
       render json: {entry: entry}
