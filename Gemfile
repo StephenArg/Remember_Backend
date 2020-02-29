@@ -12,7 +12,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'dotenv-rails'
 # Installed to set up .env file functionality. Remember to put .env into gitignore
 
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 
 # gem 'quick_random_records'
 # installed to give quickest randomization of entries; see 'https://stackoverflow.com/a/50409630/9211117'
